@@ -1,9 +1,11 @@
 const playerName = document.querySelector("#playername");
 const saveScoreBtn = document.querySelector("#saveScoreBtn");
 const finalScore = document.querySelector("#finalScore");
-const mostRecentScore = document.querySelector("#mostRecentScore");
+const mostRecentScore =
+  JSON.parse(localStorage.getItem("mostRecentScore")) || "";
 
 const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
 const MAX_HIGH_SCORES = 5;
 
 finalScore.innerText = mostRecentScore;
@@ -14,6 +16,7 @@ playerName.addEventListener("keyup", () => {
 });
 
 function saveHighScore(e) {
+  console.log(e);
   e.preventDefault();
 
   const score = {
@@ -27,7 +30,7 @@ function saveHighScore(e) {
     return b.score - a.score;
   });
 
-  highScores.splic(5);
+  highScores.splice(5);
   localStorage.setItem("highScores", JSON.stringify(highScores));
 
   window.location.assign("/");
