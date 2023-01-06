@@ -54,7 +54,7 @@ function startGame() {
   availableQuestions = [...questions];
   getNewQuestion();
 }
-startGame();
+
 function getNewQuestion() {
   if (availableQuestions.length === 0 || questionsCounter > MAX_QUESTIONS) {
     localStorage.setItem("mostRecentScore", score);
@@ -63,9 +63,7 @@ function getNewQuestion() {
 
   questionsCounter++;
   progressText.innerText = `Question ${questionsCounter} of ${MAX_QUESTIONS}`;
-  progressBarFull.getElementsByClassName.width = `${
-    (questionsCounter / MAX_QUESTIONS) * 100
-  }%`;
+  progressBarFull.style.width = `${(questionsCounter / MAX_QUESTIONS) * 100}%`;
   //   creating an index to select the question from the questions Array
   const questionsIndex = Math.floor(Math.random() * availableQuestions.length);
   currentQuestion = availableQuestions[questionsIndex];
@@ -88,9 +86,9 @@ choices.forEach((choice) => {
     acceptingAsnwers = false;
     const selectedChoice = e.target;
     const selectedAnswer = selectedChoice.dataset["number"];
-    console.log(currentQuestion.answer);
     let classToApply =
       selectedAnswer == currentQuestion.answer ? "correct" : "incorrect";
+    console.log(currentQuestion.answer);
     if (classToApply === "correct") {
       incrementScore(SCORE_POINTS);
     }
@@ -103,4 +101,10 @@ choices.forEach((choice) => {
     }, 1000);
   });
 });
-// startGame();
+
+function incrementScore(num) {
+  score += num;
+  scoreText.innerText = score;
+}
+
+startGame();
